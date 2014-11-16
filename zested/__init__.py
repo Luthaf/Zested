@@ -1,0 +1,15 @@
+from os import path
+import sys
+
+if hasattr(sys, "frozen") and sys.frozen == "macosx_app":
+    DATA_DIR = path.abspath(path.join(path.dirname(__file__), "..", "..", "..", "assets"))
+else:
+    DATA_DIR = path.abspath(path.join(path.dirname(__file__), "..", "assets"))
+
+# Define base dir variables
+UI_DIR = path.join(DATA_DIR, "ui")
+IMG_DIR = path.join(DATA_DIR, "img")
+CSS_DIR = path.join(DATA_DIR, "css")
+SMILEY_DIR = path.join(DATA_DIR, "smileys")
+
+__version__ = "0.1"
