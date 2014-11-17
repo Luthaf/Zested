@@ -10,9 +10,9 @@
     <height>477</height>
    </rect>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -27,16 +27,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTextEdit" name="text_editor"/>
-   </item>
-   <item>
-    <widget class="QTextBrowser" name="viewer"/>
-   </item>
-   <item>
-    <widget class="Line" name="line">
+    <widget class="QSplitter" name="splitter">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>6</number>
+     </property>
+     <widget class="QTextEdit" name="text_editor"/>
+     <widget class="QTextBrowser" name="viewer"/>
     </widget>
    </item>
   </layout>
