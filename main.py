@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import sys
+
 from PySide import QtGui, QtWebKit
 from zested.gui import MainWindow
-import sys
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

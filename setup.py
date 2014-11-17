@@ -4,6 +4,7 @@ This is a setup.py script for freezing the app
     py2exe is used on Windows
 """
 import sys
+import os
 from setuptools import setup
 
 from zested import __version__
@@ -29,7 +30,8 @@ options = {
 py2app_options = {
     'argv_emulation': True,
     'includes': ["PySide.QtXml"],
-    'iconfile': "assets/img/clem.icns"
+    'packages': ["xml", "markdown"],
+    'iconfile': "assets/img/clem.icns",
 }
 
 if sys.platform == 'darwin':
