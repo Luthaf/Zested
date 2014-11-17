@@ -5,6 +5,7 @@ This is a setup.py script for freezing the app
 """
 import sys
 import os
+
 from setuptools import setup
 
 from zested import __version__
@@ -12,7 +13,7 @@ from zested import __version__
 with open("Requirements.txt") as fd:
     requirements = [r.strip() for r in fd.readlines()]
 
-entry_point = "main.py"
+entry_point = "ZestEd.py"
 
 options = {
     'name': "ZestEd",
@@ -34,6 +35,14 @@ py2app_options = {
     'iconfile': "assets/img/clem.icns",
 }
 
+py2exe_options = {
+    'includes': ["PySide.QtXml"],
+    'packages': ["xml", "markdown"],
+    'dist_dir': os.path.join(os.path.dirname(__file__), "dist", "windows"),
+    'excludes': ['_ssl'],
+    'bundle_files': 3, # Should be keeped, needed by PySide
+}
+
 if sys.platform == 'darwin':
      options.update(dict(
          setup_requires=['py2app'],
@@ -42,11 +51,29 @@ if sys.platform == 'darwin':
          options={"py2app": py2app_options},
      ))
 elif sys.platform == 'win32':
-    pass
-#     options.update(dict(
-#         setup_requires=['py2exe'],
-#         app=[entry_point],
-#     ))
+    import py2exe
+    import glob
+
+    if not os.path.exists(py2exe_options['dist_dir']):
+        if not os.path.exists("dist"):
+            os.mkdir("dist")
+        os.mkdir(py2exe_options['dist_dir'])
+
+    py2exe_data_files = [
+        ("assets\\" + i, glob.glob("assets\\" + i + "\\*")) for i in ["css", "img", "ui", "smileys"]
+    ]
+
+    options.update(dict(
+         setup_requires=['py2exe'],
+         install_requires=None,
+         windows=[{
+            "script": entry_point,
+            "icon_resources": [(1, os.path.join("assets", "img", "clem.ico"))]
+         }],
+         zipfile="zested.zip",
+         data_files=py2exe_data_files,
+         options={"py2exe": py2exe_options},
+     ))
 
 
 setup(**options)
