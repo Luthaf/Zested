@@ -3,7 +3,7 @@ import os
 from markdown import Markdown
 from markdown.extensions.zds import ZdsExtension
 
-from PySide import QtGui, QtUiTools
+from PySide import QtGui, QtUiTools, QtCore
 
 from zested import UI_DIR, CSS_DIR
 from zested.gui.smileys import smileys
@@ -78,6 +78,26 @@ class ZestedTextEditor(QtGui.QTabWidget):
             fd.write(text)
 
     def update_preview(self):
-        html = md.convert(self.current_editor.toPlainText())
-        self.current_viewer.setText(html)
+        self.render_thread = MarkdownRenderThread(self.current_editor.toPlainText())
+        self.render_thread.start()
+        self.render_thread.done.connect(self.render_preview)
 
+        self.render_thread.wait(200)
+        #TODO: log this
+        self.render_thread.terminate()
+
+
+    def render_preview(self):
+        self.current_viewer.setText(self.render_thread.html)
+
+
+class MarkdownRenderThread(QtCore.QThread):
+    done = QtCore.Signal()
+
+    def __init__(self, text):
+        QtCore.QThread.__init__(self)
+        self.text = text
+
+    def run(self):
+        self.html = md.convert(self.text)
+        self.done.emit()
