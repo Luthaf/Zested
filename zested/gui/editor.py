@@ -13,6 +13,8 @@ ZDS_EXTENSION_CONFIG = {
     "emoticons": smileys
 }
 
+RENDER_INTERVAL = 500
+
 md = Markdown(extensions=[ZdsExtension(ZDS_EXTENSION_CONFIG)],
               safe_mode = 'escape',
               inline = False,
@@ -26,6 +28,8 @@ class ZestedTextEditor(QtGui.QTabWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.tabCloseRequested.connect(self.remove_tab)
+        self.can_render = True
+        self.delayed_rendering = False
 
     @property
     def current_tab(self):
@@ -78,17 +82,45 @@ class ZestedTextEditor(QtGui.QTabWidget):
             fd.write(text)
 
     def update_preview(self):
+        if self.can_render:
+            self.switch_can_render()
+            QtCore.QTimer.singleShot(RENDER_INTERVAL, self.switch_can_render)
+        else:
+            self.delay_rendering()
+            return None
+
         self.render_thread = MarkdownRenderThread(self.current_editor.toPlainText())
         self.render_thread.start()
         self.render_thread.done.connect(self.render_preview)
 
-        self.render_thread.wait(200)
+        self.render_thread.wait(3/4*RENDER_INTERVAL)
         #TODO: log this
         self.render_thread.terminate()
 
+    def switch_can_render(self):
+        self.can_render = not self.can_render
+
 
     def render_preview(self):
+        vscroll_bar = self.current_viewer.verticalScrollBar()
+        hscroll_bar = self.current_viewer.horizontalScrollBar()
+        vscroll = vscroll_bar.value()
+        hscroll = hscroll_bar.value()
         self.current_viewer.setText(self.render_thread.html)
+        vscroll_bar.setValue(vscroll)
+        hscroll_bar.setValue(hscroll)
+
+        self.delayed_rendering = False
+
+    def delay_rendering(self):
+        '''
+        Delay markdown rendering if there is no already delayed rendering
+        '''
+        if not self.delayed_rendering:
+            QtCore.QTimer.singleShot(2*RENDER_INTERVAL, self.update_preview)
+            self.delayed_rendering = True
+
+
 
 
 class MarkdownRenderThread(QtCore.QThread):
