@@ -31,6 +31,12 @@ class ZestedTextEditor(QtGui.QTabWidget):
         self.can_render = True
         self.delayed_rendering = False
 
+        with open(os.path.join(CSS_DIR, "main.css")) as fd:
+            self.css = fd.read()
+
+        with open(os.path.join(CSS_DIR, "pygments.css")) as fd:
+            self.css += fd.read()
+
     @property
     def current_tab(self):
         return self.widget(self.tabBar().currentIndex())
@@ -89,7 +95,10 @@ class ZestedTextEditor(QtGui.QTabWidget):
             self.delay_rendering()
             return None
 
-        self.render_thread = MarkdownRenderThread(self.current_editor.toPlainText())
+        self.render_thread = MarkdownRenderThread(
+                                self.current_editor.toPlainText(),
+                                self.css
+                                )
         self.render_thread.start()
         self.render_thread.done.connect(self.render_preview)
 
@@ -120,16 +129,18 @@ class ZestedTextEditor(QtGui.QTabWidget):
             QtCore.QTimer.singleShot(2*RENDER_INTERVAL, self.update_preview)
             self.delayed_rendering = True
 
-
-
-
 class MarkdownRenderThread(QtCore.QThread):
     done = QtCore.Signal()
 
-    def __init__(self, text):
+    def __init__(self, text, css):
         QtCore.QThread.__init__(self)
         self.text = text
+        self.css = css
 
     def run(self):
-        self.html = md.convert(self.text)
+        self.html = '<style type="text/css">'
+        self.html += self.css
+        self.html += '</style>'
+
+        self.html += md.convert(self.text)
         self.done.emit()
