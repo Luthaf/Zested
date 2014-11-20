@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 
-from PySide import QtGui, QtWebKit
+from PySide import QtGui
 from zested.gui import MainWindow
 
 
