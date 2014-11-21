@@ -45,11 +45,4 @@ python3 main.py
 
 - Les images ne sont pas rendues.
 - Les liens sont cliquables, mais ne mènent à rien
-- Le style spécifique de ZDS manque
-- Le code n'est pas coloré
 
-#### Packaging
-
-##### MacOsX
-
-ImportError pour `markdown.extension.abbr` et consorts
