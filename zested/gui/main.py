@@ -42,13 +42,11 @@ class MainWindow(QtGui.QMainWindow):
         # Load default state
         self.change_state("home")
 
-        # Set tutorial tree view width
-        tutorial = self.findChild(QtGui.QWidget, "tutorial")
-        rect = tutorial.frameRect()
-        rect.setWidth(350)
-        tutorial.setFrameRect(rect)
-
         self.showMaximized()
+        # Set tutorial tree view width
+        splitter = self.findChild(QtGui.QWidget, "splitter")
+        splitter.setSizes([150, sum(splitter.sizes()) - 150])
+
         self.raise_()
 
     def connect_actions(self):
