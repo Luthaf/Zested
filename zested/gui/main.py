@@ -42,6 +42,12 @@ class MainWindow(QtGui.QMainWindow):
         # Load default state
         self.change_state("home")
 
+        # Set tutorial tree view width
+        tutorial = self.findChild(QtGui.QWidget, "tutorial")
+        rect = tutorial.frameRect()
+        rect.setWidth(350)
+        tutorial.setFrameRect(rect)
+
         self.showMaximized()
         self.raise_()
 
