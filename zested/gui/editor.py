@@ -50,6 +50,10 @@ class ZestedTextEditor(QtGui.QTabWidget):
         return self.current_tab.findChild(QtGui.QWidget, "viewer")
 
     def load_extract(self, extract):
+        '''
+        Create a new tab, and set it's content to the extract file
+        content.
+        '''
         if os.path.isdir(extract.path):
             return None
 
@@ -74,25 +78,39 @@ class ZestedTextEditor(QtGui.QTabWidget):
         return tab
 
     def remove_tab(self, index):
+        '''
+        Remove the tab at the index `index`
+        '''
         widget = self.widget(index)
         self.removeTab(index)
         widget.deleteLater()
 
     def remove_current_tab(self):
+        '''
+        Remove the current tab
+        '''
         index = self.tabBar().currentIndex()
         self.remove_tab(index)
 
     def save_current_tab(self):
+        '''
+        Save the current tab's editor content to the associated file
+        '''
         text = self.current_editor.toPlainText()
         with open(self.current_tab.filepath, "w") as fd:
             fd.write(text)
 
     def update_preview(self):
+        '''
+        Main logic to update preview: if possible, a new thread is started.
+        Then, we wait for the thread to finish, and terminate it if it's take
+        too long.
+        '''
         if self.can_render:
-            self.switch_can_render()
-            QtCore.QTimer.singleShot(RENDER_INTERVAL, self.switch_can_render)
+            self._switch_can_render()
+            QtCore.QTimer.singleShot(RENDER_INTERVAL, self._switch_can_render)
         else:
-            self.delay_rendering()
+            self._delay_rendering()
             return None
 
         self.render_thread = MarkdownRenderThread(
@@ -106,11 +124,16 @@ class ZestedTextEditor(QtGui.QTabWidget):
         #TODO: log this
         self.render_thread.terminate()
 
-    def switch_can_render(self):
+    def _switch_can_render(self):
+        '''
+        Flip the self.can_render attribute.
+        '''
         self.can_render = not self.can_render
 
-
     def render_preview(self):
+        '''
+        Effectively update the preview panel.
+        '''
         vscroll_bar = self.current_viewer.verticalScrollBar()
         hscroll_bar = self.current_viewer.horizontalScrollBar()
         vscroll = vscroll_bar.value()
@@ -121,7 +144,7 @@ class ZestedTextEditor(QtGui.QTabWidget):
 
         self.delayed_rendering = False
 
-    def delay_rendering(self):
+    def _delay_rendering(self):
         '''
         Delay markdown rendering if there is no already delayed rendering
         '''
