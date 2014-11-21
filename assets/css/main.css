@@ -1,7 +1,7 @@
-h3, h4 {
-	color: #EA9308;
-}
-
-a {
-	color: #108BBF;
-}
+h3, h4 {color: #EA9308;}
+a {color: #108BBF;}
+.information {background: #daeaee;}
+.question {background: #e2daee;}
+.error {background: #eedada;}
+.warning {background: #eee7da;}
+.spoiler {background: #EEE;}
