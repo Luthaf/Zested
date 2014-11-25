@@ -135,19 +135,18 @@
     <property name="title">
      <string>&amp;Tutoriel</string>
     </property>
+    <widget class="QMenu" name="menuTutorielsRecents">
+     <property name="title">
+      <string>Tutoriels Récents</string>
+     </property>
+     <addaction name="actionEmpty"/>
+    </widget>
     <addaction name="actionOuvrir"/>
+    <addaction name="menuTutorielsRecents"/>
    </widget>
    <addaction name="menu_Fichiers"/>
    <addaction name="menu_Tutoriel"/>
   </widget>
-  <action name="actionNouveau">
-   <property name="text">
-    <string>Nouveau</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-  </action>
   <action name="actionEnregistrer">
    <property name="text">
     <string>Enregistrer</string>
@@ -162,16 +161,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+,</string>
-   </property>
-  </action>
-  <action name="actionPolices">
-   <property name="text">
-    <string>Polices</string>
-   </property>
-  </action>
-  <action name="actionCouleurs">
-   <property name="text">
-    <string>Couleurs</string>
    </property>
   </action>
   <action name="actionQuitter">
@@ -190,30 +179,6 @@
     <string>Ctrl+W</string>
    </property>
   </action>
-  <action name="actionCopier">
-   <property name="text">
-    <string>Copier</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+C</string>
-   </property>
-  </action>
-  <action name="actionColler">
-   <property name="text">
-    <string>Coller</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+V</string>
-   </property>
-  </action>
-  <action name="actionCouper">
-   <property name="text">
-    <string>Couper</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+X</string>
-   </property>
-  </action>
   <action name="actionOuvrir">
    <property name="text">
     <string>Ouvrir</string>
@@ -222,9 +187,9 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionT_l_charger">
+  <action name="actionEmpty">
    <property name="text">
-    <string>Télécharger</string>
+    <string>empty</string>
    </property>
   </action>
  </widget>

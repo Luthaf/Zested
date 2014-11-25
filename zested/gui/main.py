@@ -140,7 +140,19 @@ class MainWindow(QtGui.QMainWindow):
         if self.state == "home":
             select = self.findChild(QtGui.QWidget, "selectRecentTutorial")
             select.clear()
-            select.addItem("Nouveau tutoriel ...")
             for name in self.recent_tutorials.keys():
                 select.addItem(name)
+            select.addItem("Nouveau tutoriel ...")
 
+        recents_tuto_menu = self.findChild(QtGui.QWidget, "menuTutorielsRecents")
+        recents_tuto_menu.clear()
+
+        for name in self.recent_tutorials.keys():
+            action = QtGui.QAction(name, self)
+            action.setData(self.recent_tutorials[name])
+            action.triggered.connect(self._load_tutorial_from_menu)
+            recents_tuto_menu.addAction(action)
+
+    def _load_tutorial_from_menu(self):
+        action = self.sender()
+        self._load_tutorial_from_path(action.data())

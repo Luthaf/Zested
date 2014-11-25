@@ -73,9 +73,6 @@
       </item>
       <item>
        <widget class="QComboBox" name="selectRecentTutorial">
-        <property name="currentText">
-         <string/>
-        </property>
         <property name="currentIndex">
          <number>-1</number>
         </property>
