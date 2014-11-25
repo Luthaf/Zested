@@ -6,17 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>0</width>
-    <height>0</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <item>
-    <widget class="ZestedTextEditor" name="editor">
+    <widget class="ZestedEditorTab" name="editor">
      <property name="styleSheet">
-      <string notr="true">QTabWidget {
-	border: none;
-}</string>
+      <string notr="true">QTabWidget {border: none;}
+      </string>
      </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
@@ -36,9 +35,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ZestedTextEditor</class>
+   <class>ZestedEditorTab</class>
    <extends>QTabWidget</extends>
-   <header>zestedtexteditor.h</header>
+   <header>zestededitortab.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

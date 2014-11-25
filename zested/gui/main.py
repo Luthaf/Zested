@@ -3,7 +3,7 @@ import os
 from PySide import QtCore, QtGui, QtUiTools
 
 from zested.gui.loader import UiLoader
-from zested.gui import ZestedTextEditor
+from zested.gui import ZestedTextEditor, ZestedEditorTab
 
 from zested import IMG_DIR, UI_DIR
 from zested.tutorial import tutorial_from_manifest, render_tutorial
@@ -16,7 +16,7 @@ APP_STATES = {
     "editor": "editor.ui"
 }
 
-CUSTOM_WIDGETS = [ZestedTextEditor]
+CUSTOM_WIDGETS = [ZestedEditorTab, ZestedTextEditor]
 
 CONNECTIONS = {
     "actionOuvrir": "load_tutorial",
@@ -76,7 +76,9 @@ class MainWindow(QtGui.QMainWindow):
     def load_tutorial(self):
         # Get filepath. Should be a manifest.json file
         home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
-        path, _ = QtGui.QFileDialog.getOpenFileName(self, 'Ouvir un tutoriel (fichier manifest.json)', home_dir)
+        path, _ = QtGui.QFileDialog.getOpenFileName(self, 
+                    'Ouvir un tutoriel (fichier manifest.json)', 
+                    home_dir)
         tutorial_widget = self.findChild(QtGui.QWidget, "tutorial")
         # Create the tutorial instance
         self.tutorial = tutorial_from_manifest(path)
@@ -89,14 +91,14 @@ class MainWindow(QtGui.QMainWindow):
         if self.state != "editor":
             self.change_state("editor")
 
-        editor = self.findChild(ZestedTextEditor)
+        editor = self.findChild(ZestedEditorTab)
         editor.load_extract(extract)
 
     def close_tab(self):
-        editor = self.findChild(ZestedTextEditor)
+        editor = self.findChild(ZestedEditorTab)
         editor.remove_current_tab()
 
     def save_tab(self):
-        editor = self.findChild(ZestedTextEditor)
+        editor = self.findChild(ZestedEditorTab)
         editor.save_current_tab()
 

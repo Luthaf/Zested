@@ -1,4 +1,6 @@
 import os
+import urllib.request
+import time
 
 from markdown import Markdown
 from markdown.extensions.zds import ZdsExtension
@@ -23,7 +25,7 @@ md = Markdown(extensions=[ZdsExtension(ZDS_EXTENSION_CONFIG)],
               lazy_ol = True,
 )
 
-class ZestedTextEditor(QtGui.QTabWidget):
+class ZestedEditorTab(QtGui.QTabWidget):
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -151,6 +153,51 @@ class ZestedTextEditor(QtGui.QTabWidget):
         if not self.delayed_rendering:
             QtCore.QTimer.singleShot(2*RENDER_INTERVAL, self.update_preview)
             self.delayed_rendering = True
+
+class ZestedTextEditor(QtGui.QTextBrowser):
+
+    def loadResource(self, type, name):
+        if type == QtGui.QTextDocument.ImageResource:
+            image_url = name.toString()
+            if image_url.startswith("http"):
+                local_path = self._download_image(image_url)
+            else:
+                local_path = name.toLocalFile()
+            return QtGui.QImage(local_path)
+        return super().loadResource(type, name)
+
+    def _download_image(self, image_url):
+        '''
+        Download a network image to a local temporary directory.
+
+        If the file already exists and is less old than 24h, reuse-it
+        '''
+        image_path = os.path.join(*image_url.split("/")[3:])
+        tmpdir = QtCore.QDir.tempPath()
+
+        filepath = os.path.join(tmpdir,
+                                "zested" + time.strftime("%d-%m-%y"),
+                                image_path)
+
+        if os.path.isfile(filepath):
+            return filepath
+
+        filedir = os.path.dirname(filepath)
+        os.makedirs(filedir, exist_ok=True)
+
+        image = open(filepath, "wb")
+
+        image_on_network = urllib.request.urlopen(image_url)
+        while True:
+            buf = image_on_network.read(65536)
+            if len(buf) == 0:
+                break
+            image.write(buf)
+
+        image.close()
+        image_on_network.close()
+
+        return filepath
 
 class MarkdownRenderThread(QtCore.QThread):
     done = QtCore.Signal()
