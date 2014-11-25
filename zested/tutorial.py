@@ -36,7 +36,7 @@ class TutorialPart:
             return None
 
 def tutorial_from_manifest(path):
-    with open(path) as fd:
+    with open(path, encoding="utf8") as fd:
         manifest = json.load(fd)
 
     base_path = os.path.dirname(path)

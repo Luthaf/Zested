@@ -32,11 +32,12 @@ class ZestedEditorTab(QtGui.QTabWidget):
         self.tabCloseRequested.connect(self.remove_tab)
         self.can_render = True
         self.delayed_rendering = False
+        self._read_css()
 
-        with open(os.path.join(CSS_DIR, "main.css")) as fd:
+    def _read_css(self):
+        with open(os.path.join(CSS_DIR, "main.css"), encoding="utf8") as fd:
             self.css = fd.read()
-
-        with open(os.path.join(CSS_DIR, "pygments.css")) as fd:
+        with open(os.path.join(CSS_DIR, "pygments.css"), encoding="utf8") as fd:
             self.css += fd.read()
 
     @property
@@ -62,7 +63,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
         tab = self.new_tab(extract.path, extract.title)
         self.current_editor.textChanged.connect(self.update_preview)
 
-        with open(extract.path) as fd:
+        with open(extract.path, encoding="utf8") as fd:
             self.current_editor.setPlainText(fd.read())
 
     def new_tab(self, path, title=""):
@@ -99,7 +100,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
         Save the current tab's editor content to the associated file
         '''
         text = self.current_editor.toPlainText()
-        with open(self.current_tab.filepath, "w") as fd:
+        with open(self.current_tab.filepath, "w", encoding="utf8") as fd:
             fd.write(text)
 
     def update_preview(self):
