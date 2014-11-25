@@ -43,6 +43,5 @@ python3 main.py
 
 #### Pré-visualisation
 
-- Les images ne sont pas rendues.
 - Les liens sont cliquables, mais ne mènent à rien
 

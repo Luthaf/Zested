@@ -1,3 +1,8 @@
+## 0.3
+
+ - Rendu et mise en cache des images
+ - Utilisation d'UTF-8 pour tous les fichiers.
+
 ## 0.2
 
  - Ajout de sliders dans l'interface
