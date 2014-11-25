@@ -1,47 +1,71 @@
-## ZestEd
+# ZestEd
 
 ZestEd est un éditeur hors-ligne pour [Zeste de Savoir](http://zestedesavoir.com/)
 
-### Fonctionalités
+Pour les fonctionnalitées, voir le fichier [News](News.md)
 
-Juste le minimum du minimum pour l'instant :
+## Installation
 
-- Ouverture/édition/enregistrement des extraits
-- Navigation dans la structure d'un tutoriel
-- Prévisualisation
+### Version pré-compilées
 
-### Installation
+Ces versions fournissent l'ensemble des dépendances dans un seul fichier, il n'y a besoin de rien d'autre !
 
-#### Code source
+Elles existent pour OsX et Windows, et sont disponibles sur la page des [releases](https://github.com/Luthaf/ZestEd/releases).
 
-Avec git
+### Depuis les sources
+
+On commence par les dépendances :
+   - Python 3
+   - Qt
+   - (PySide) si vous n'utilisez pas pip pour l'installation
+
+Ensuite le code de ZestEd :
 ```
-git clone https://github.com/Luthaf/ZestEd
-```
-ou directement depuis la page des [versions](https://github.com/Luthaf/ZestEd/releases).
-
-Puis avant de poursuivre l'installation/l'utilisation
-```
+git clone https://github.com/Luthaf/ZestEd ZestEd
 cd ZestEd
 ```
-
-#### Dépendances
-
-Il faut installer Python3, et pip3. Ensuite, lancer la commande
+Puis les dépendances python
 ```
 pip3 install -r Requirements.txt
 ```
-
-### Utilisation
-
-C'est aussi simple que
+Et le logiciel se lance avec la commande
 ```
-python3 main.py
+python3 ZestEd.py
 ```
 
-### Bugs connus
+## Packaging
 
-#### Pré-visualisation
+Voici les instructions pour créer les versions *pré-compilées*. Il faut tout d'abord installer l'intégralité des dépendances, puis suivre les instructions spécifiques.
+
+Ces versions *pré-compilées* sont simplement des interpréteurs Python gelés avec l'ensemble des bibliothèques nécessaires.
+
+### Windows
+
+Le *freezing* utilise `py2exe`, qu'il faut donc installer (`pip3 install py2exe`). Ensuite, c'est aussi simple que
+```
+python3 setup.py py2exe
+```
+Les fichiers produits sont dans `dist\windows`.
+
+### OsX
+
+Le *freezing* utilise `py2app`, qu'il faut donc installer (`pip3 install py2app`). Ensuite, c'est aussi simple que
+```
+python3 setup.py py2app
+```
+Le bundle `.app` créé est dans `dist`.
+
+Note: La version de PySide installée avec pip cause des segfaults lorsqu'elle est gelée. Il faut donc utiliser la version disponible avec Homebrew :
+```
+brew install python3 qt
+brew install pyside --with-python3
+```
+
+## Contribuer au projet
+
+Il n'y a pas encore de liste de choses à faire, mais je prends toute aide sur ce projet ! Les points principaux d'amélioration concernent l'interface (fichier `.ui` de QtDesigner) et le code bien entendu. Si vous voulez participer, envoyez-moi un MP sur ZdS pour discuter de ce qu'il faut faire, ou ouvrez une issue sur Github !
+
+## Bugs connus
 
 - Les liens sont cliquables, mais ne mènent à rien
 
