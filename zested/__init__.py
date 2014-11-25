@@ -14,4 +14,4 @@ IMG_DIR = path.join(DATA_DIR, "img")
 CSS_DIR = path.join(DATA_DIR, "css")
 SMILEY_DIR = path.join(DATA_DIR, "smileys")
 
-__version__ = "0.2"
+__version__ = "0.3"
