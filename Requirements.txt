@@ -1,2 +1,3 @@
 PySide
 git+https://github.com/Luthaf/Python-ZMarkdown
+pygments
