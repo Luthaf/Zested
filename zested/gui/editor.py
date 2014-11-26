@@ -2,28 +2,12 @@ import os
 import urllib.request
 import time
 
-from markdown import Markdown
-from markdown.extensions.zds import ZdsExtension
-
 from PySide import QtGui, QtUiTools, QtCore
 
 from zested import UI_DIR, CSS_DIR
-from zested.gui.smileys import smileys
-
-ZDS_EXTENSION_CONFIG = {
-    "inline": False,
-    "emoticons": smileys
-}
+from zested.render import MarkdownRenderThread
 
 RENDER_INTERVAL = 500
-
-md = Markdown(extensions=[ZdsExtension(ZDS_EXTENSION_CONFIG)],
-              safe_mode = 'escape',
-              inline = False,
-              enable_attributes = False,
-              smart_emphasis = True,
-              lazy_ol = True,
-)
 
 class ZestedEditorTab(QtGui.QTabWidget):
 
@@ -199,19 +183,3 @@ class ZestedTextEditor(QtGui.QTextBrowser):
         image_on_network.close()
 
         return filepath
-
-class MarkdownRenderThread(QtCore.QThread):
-    done = QtCore.Signal()
-
-    def __init__(self, text, css):
-        QtCore.QThread.__init__(self)
-        self.text = text
-        self.css = css
-
-    def run(self):
-        self.html = '<style type="text/css">'
-        self.html += self.css
-        self.html += '</style>'
-
-        self.html += md.convert(self.text)
-        self.done.emit()
