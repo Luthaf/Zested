@@ -38,11 +38,20 @@ class ZestedEditorTab(QtGui.QTabWidget):
 
     def load_extract(self, extract):
         '''
-        Create a new tab, and set it's content to the extract file
-        content.
+        Load an extract and fill a tab with it, or set the extract tab active 
+        if it is aleready loaded.
         '''
+        # Container directories 
         if os.path.isdir(extract.path):
             return None
+
+        # Check if the tab already exists
+        all_tabs = self.findChildren(QtGui.QWidget, "editor_tab")
+        for tab in all_tabs:
+            if tab.filepath == extract.path:
+                self.setCurrentWidget(tab)
+                return None
+
 
         tab = self.new_tab(extract.path, extract.title)
         self.current_editor.textChanged.connect(self.update_preview)
@@ -52,7 +61,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
 
     def new_tab(self, path, title=""):
         '''
-        Create an empty new tab
+        Create a new empty tab
         '''
         ui_filename = os.path.join(UI_DIR, "editor_tab.ui")
         loader = QtUiTools.QUiLoader()
