@@ -8,11 +8,11 @@ class TutorialPart:
     A Tutorial is a recursive structure of TutorialPart.
     '''
 
-    def __init__(self, title, path, have_introduction=False, have_conclusion=False):
+    def __init__(self, title, path, have_intro=False, have_conclu=False):
         self.title = title
         self.path = path
-        self.have_introduction = have_introduction
-        self.have_conclusion = have_conclusion
+        self.have_introduction = have_intro
+        self.have_conclusion = have_conclu
         self.children = []
 
     def __str__(self):
@@ -52,15 +52,21 @@ def tutorial_from_manifest(path):
 def load_big_tuto(tutorial, manifest):
     for part in manifest["parts"]:
         tuto_part = TutorialPart(part["title"],
-                                os.path.join(tutorial.path, os.path.dirname(part["introduction"])),
+                                os.path.join(
+                                    tutorial.path,
+                                    os.path.dirname(part["introduction"])),
                                 True, True)
         for chapter in part["chapters"]:
             tuto_chapter = TutorialPart(chapter["title"],
-                                        os.path.join(tutorial.path, os.path.dirname(chapter["introduction"])),
-                                        True, True)
+                                os.path.join(
+                                    tutorial.path,
+                                    os.path.dirname(chapter["introduction"])),
+                                True, True)
             for extract in chapter["extracts"]:
                 tuto_chapter.append(TutorialPart(extract["title"],
-                                                os.path.join(tutorial.path, extract["text"])
+                                                os.path.join(
+                                                    tutorial.path,
+                                                    extract["text"])
                                                 ))
             tuto_part.append(tuto_chapter)
         tutorial.append(tuto_part)
@@ -117,7 +123,8 @@ def create_tutorial_tree_view(widget, section, root=False):
     root_widget = child if not root else widget
 
     if section.introduction is not None:
-        child = TutorialItem(section.introduction, "Introduction")
+        child = TutorialItem(section.introduction,
+                "Introduction — " + section.title)
         root_widget.addChild(child)
         child.setText(0, "Introduction")
 
@@ -125,7 +132,8 @@ def create_tutorial_tree_view(widget, section, root=False):
         create_tutorial_tree_view(root_widget, child_section)
 
     if section.conclusion is not None:
-        child = TutorialItem(section.conclusion, "Conclusion")
+        child = TutorialItem(section.conclusion,
+            "Conclusion — " + section.title)
         root_widget.addChild(child)
         child.setText(0, "Conclusion")
 
