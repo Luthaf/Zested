@@ -59,6 +59,8 @@ class ZestedEditorTab(QtGui.QTabWidget):
         with open(extract.path, encoding="utf8") as fd:
             self.current_editor.setPlainText(fd.read())
 
+        self.current_editor.textChanged.connect(self.warning_updated)
+
     def new_tab(self, path, title=""):
         '''
         Create a new empty tab
@@ -68,6 +70,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
         tab = loader.load(ui_filename, self)
 
         tab.filepath = path
+        tab.updated = False
 
         self.addTab(tab, title)
         self.setCurrentWidget(tab)
@@ -95,6 +98,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
         text = self.current_editor.toPlainText()
         with open(self.current_tab.filepath, "w", encoding="utf8") as fd:
             fd.write(text)
+        self._flip_updated()
 
     def update_preview(self):
         '''
@@ -147,6 +151,31 @@ class ZestedEditorTab(QtGui.QTabWidget):
         if not self.delayed_rendering:
             QtCore.QTimer.singleShot(2*RENDER_INTERVAL, self.update_preview)
             self.delayed_rendering = True
+
+    def warning_updated(self):
+        '''
+        Add a little star if the content of the tab changed, and switch the 
+        current_tab.updated attribute to True
+        '''
+        if not self.current_tab.updated:
+            self._flip_updated()
+
+    def _flip_updated(self):
+        '''
+        Flip the updated state: tab attribute and tab title
+        '''
+        tab_bar = self.tabBar()
+        index = tab_bar.currentIndex()
+
+        if not self.current_tab.updated:
+            # Add star
+            tab_bar.setTabText(index, tab_bar.tabText(index) + "*")
+        else:
+            # Remove star
+            tab_bar.setTabText(index, tab_bar.tabText(index)[:-1])
+        # Flip attribute
+        self.current_tab.updated = not self.current_tab.updated
+
 
 class ZestedTextEditor(QtGui.QTextBrowser):
 
