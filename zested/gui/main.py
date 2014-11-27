@@ -156,3 +156,15 @@ class MainWindow(QtGui.QMainWindow):
     def _load_tutorial_from_menu(self):
         action = self.sender()
         self._load_tutorial_from_path(action.data())
+
+    def closeEvent(self, event):
+        '''
+        Overloaded method. Close all the tabs to allow user to save his work.
+        '''
+        editor = self.findChild(ZestedEditorTab)
+        for index in range(editor.count()):
+            res = editor.remove_tab(index)
+            if res == "Canceled":
+                event.ignore()
+                return None
+        event.accept()

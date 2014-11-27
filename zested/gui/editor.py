@@ -6,6 +6,7 @@ from PySide import QtGui, QtUiTools, QtCore
 
 from zested import UI_DIR, CSS_DIR
 from zested.render import MarkdownRenderThread
+from zested.gui.messages import SaveModifiedMessage
 
 RENDER_INTERVAL = 500
 
@@ -52,7 +53,6 @@ class ZestedEditorTab(QtGui.QTabWidget):
                 self.setCurrentWidget(tab)
                 return None
 
-
         tab = self.new_tab(extract.path, extract.title)
         self.current_editor.textChanged.connect(self.update_preview)
 
@@ -80,9 +80,28 @@ class ZestedEditorTab(QtGui.QTabWidget):
         '''
         Remove the tab at the index `index`
         '''
-        widget = self.widget(index)
+        tab = self.widget(index)
+
+        if tab.updated:
+            message = SaveModifiedMessage()
+            ret = message.exec_()
+            if ret == message.Save:
+                current = self.tabBar().currentIndex()
+                self.setCurrentWidget(tab)
+                self.save_current_tab()
+                if current > index:
+                    self.setCurrentWidget(self.widget(current - 1))
+                else:
+                    self.setCurrentWidget(self.widget(current))
+            elif ret == message.Discard:
+                pass
+            elif ret == message.Cancel:
+                return "Canceled"
+            else:
+                return None
+
         self.removeTab(index)
-        widget.deleteLater()
+        tab.deleteLater()
 
     def remove_current_tab(self):
         '''
