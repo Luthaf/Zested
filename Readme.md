@@ -14,23 +14,14 @@ Elles existent pour OsX et Windows, et sont disponibles sur la page des [release
 
 ### Depuis les sources
 
-On commence par les dépendances :
-   - Python 3
-   - Qt
-   - (PySide) si vous n'utilisez pas pip pour l'installation
+Cette méthode fonctionne pour toutes les OS. Il faut avoir Python 3 d'installé, puis lancer la commande
+```
+pip3 install -e https://github.com/Luthaf/ZestEd
+```
 
-Ensuite le code de ZestEd :
+Le logiciel peut ensuite être démaré avec la commande `zested`. Si jamais le logiciel a une *erreur de segmentation* ou segfault, lancez la commande suivante avant de rapporter un bug :
 ```
-git clone https://github.com/Luthaf/ZestEd ZestEd
-cd ZestEd
-```
-Puis les dépendances python
-```
-pip3 install -r Requirements.txt
-```
-Et le logiciel se lance avec la commande
-```
-python3 ZestEd.py
+pyside_postinstall.py -install
 ```
 
 ## Packaging

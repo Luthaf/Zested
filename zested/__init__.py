@@ -6,7 +6,7 @@ if hasattr(sys, "frozen") and sys.frozen == "macosx_app":
 elif hasattr(sys, "frozen") and sys.platform == "win32":
     DATA_DIR = path.join(path.dirname(sys.executable), "assets")
 else:
-    DATA_DIR = path.abspath(path.join(path.dirname(__file__), "..", "assets"))
+    DATA_DIR = path.abspath(path.join(path.dirname(__file__), "assets"))
 
 # Define base dir variables
 UI_DIR = path.join(DATA_DIR, "ui")

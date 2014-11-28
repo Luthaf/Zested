@@ -1,3 +1,8 @@
+## 0.4
+
+ - L'installation est possible avec pip
+ - Le fonctionnement des onglets est amélioré
+
 ## 0.3
 
  - Rendu et mise en cache des images

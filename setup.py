@@ -6,33 +6,34 @@ This is a setup.py script for freezing the app
 import sys
 import os
 
-from setuptools import setup
-
+from setuptools import setup, find_packages
 from zested import __version__
 
-with open("Requirements.txt") as fd:
-    requirements = [r.strip() for r in fd.readlines()]
-
-entry_point = "ZestEd.py"
-
 options = {
-    'name': "ZestEd",
+    'name': "Zested",
     'author': "Luthaf",
     'author_email': "luthaf@luthaf.fr",
     'license': "MIT",
     'version': __version__,
 
-    'install_requires': requirements,
+    'install_requires': ["PySide", "pygments", "markdown"],
+    'dependency_links': ['http://github.com/Luthaf/Python-ZMarkdown/archive/master-zds.zip#egg=markdown'],
 
-    'packages': ["zested"],
-    'data_files': ["assets"],
+    'packages': find_packages(),
+    'include_package_data': True,
+
+    'entry_points': {
+        'gui_scripts': [
+            "zested = zested.main:main",
+        ],
+    },
 }
 
 py2app_options = {
     'argv_emulation': True,
     'includes': ["PySide.QtXml"],
     'packages': ["xml", "markdown", "pygments"],
-    'iconfile': "assets/img/clem.icns",
+    'iconfile': "zested/assets/img/clem.icns",
 }
 
 py2exe_options = {
@@ -43,14 +44,17 @@ py2exe_options = {
     'bundle_files': 3, # Should be keeped, needed by PySide
 }
 
-if sys.platform == 'darwin':
+if sys.argv[1] == "py2app":
      options.update(dict(
          setup_requires=['py2app'],
          install_requires=None,
-         app=[entry_point],
+         data_files=["zested/assets"],
+         include_package_data=False,
+         app=["Zested.py"],
          options={"py2app": py2app_options},
      ))
-elif sys.platform == 'win32':
+
+elif sys.argv[1] == "py2exe":
     import py2exe
     import glob
 
@@ -65,12 +69,13 @@ elif sys.platform == 'win32':
 
     options.update(dict(
          setup_requires=['py2exe'],
-         install_requires=None,
          windows=[{
-            "script": entry_point,
-            "icon_resources": [(1, os.path.join("assets", "img", "clem.ico"))]
+            "script": "Zested.py",
+            "icon_resources": [(1, os.path.join("assets", "assets", "img", "clem.ico"))]
          }],
          zipfile="zested.zip",
+         install_requires=None,
+         include_package_data=False,
          data_files=py2exe_data_files,
          options={"py2exe": py2exe_options},
      ))
