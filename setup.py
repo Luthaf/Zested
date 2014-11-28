@@ -6,6 +6,11 @@ This is a setup.py script for freezing the app
 import sys
 import os
 
+min_version = (3, 2)
+if sys.version_info <= min_version:
+    print("Please use Python >= 3.2 for this package.")
+    sys.exit(1)
+
 from setuptools import setup, find_packages
 from zested import __version__
 
