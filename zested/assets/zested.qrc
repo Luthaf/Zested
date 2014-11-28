@@ -1,5 +1,5 @@
 <RCC>
   <qresource prefix="images">
-    <file>assets/img/clem.png</file>
+    <file>img/clem.png</file>
   </qresource>
 </RCC>

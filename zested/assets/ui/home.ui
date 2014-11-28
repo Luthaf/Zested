@@ -168,7 +168,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../../zested.qrc">:/images/assets/img/clem.png</pixmap>
+            <pixmap resource="../zested.qrc">:/images/img/clem.png</pixmap>
            </property>
           </widget>
          </item>
@@ -268,7 +268,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../zested.qrc"/>
+  <include location="../zested.qrc"/>
  </resources>
  <connections/>
 </ui>

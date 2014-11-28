@@ -22,7 +22,7 @@ $(Win_zip): $(Win_app)
 	@echo "Ziping Windows version"
 	@zip -r $(Win_zip) dist/windows > /dev/null
 
-$(ressources): zested.qrc
+$(ressources): zested/assets/zested.qrc
 	pyside-rcc -py3 $^ -o $@
 
 .PHONY: clean
