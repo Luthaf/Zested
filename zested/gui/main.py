@@ -140,7 +140,7 @@ class MainWindow(QtGui.QMainWindow):
             select.clear()
             for name in self.recent_tutorials.keys():
                 select.addItem(name)
-            select.addItem("Nouveau tutoriel ...")
+            select.addItem("Autre tutoriel …")
 
         recents_tuto_menu = self.findChild(QtGui.QWidget, "menuTutorielsRecents")
         recents_tuto_menu.clear()
