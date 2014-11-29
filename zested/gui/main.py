@@ -86,13 +86,11 @@ class MainWindow(QtGui.QMainWindow):
             getattr(signal_widget, signal_function).connect(getattr(self, slot))
 
     def load_tutorial(self):
-        # Get filepath. Should be a manifest.json file
         home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
         path, _ = QtGui.QFileDialog.getOpenFileName(self,
                     'Ouvir un tutoriel (fichier manifest.json)',
-                    home_dir)
-        if not path.endswith("manifest.json"):
-            return None
+                    home_dir,
+                    'manifest.json')
         self._load_tutorial_from_path(path)
 
     def _load_tutorial_from_path(self, path):
