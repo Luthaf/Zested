@@ -159,6 +159,9 @@ class MainWindow(QtGui.QMainWindow):
         '''
         Overloaded method. Close all the tabs to allow user to save his work.
         '''
+        if not self.state == "editor":
+            event.accept()
+            return None
         editor = self.findChild(ZestedEditorTab)
         for index in range(editor.count()):
             res = editor.remove_tab(index)
