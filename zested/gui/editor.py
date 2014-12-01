@@ -6,6 +6,7 @@ from PySide import QtGui, QtUiTools, QtCore
 
 from zested import UI_DIR, CSS_DIR
 from zested.render import MarkdownRenderThread
+from zested.highlight import MarkdownHighlighter
 from zested.gui.messages import SaveModifiedMessage
 
 RENDER_INTERVAL = 500
@@ -39,10 +40,10 @@ class ZestedEditorTab(QtGui.QTabWidget):
 
     def load_extract(self, extract):
         '''
-        Load an extract and fill a tab with it, or set the extract tab active 
+        Load an extract and fill a tab with it, or set the extract tab active
         if it is aleready loaded.
         '''
-        # Container directories 
+        # Container directories
         if os.path.isdir(extract.path):
             return None
 
@@ -74,6 +75,10 @@ class ZestedEditorTab(QtGui.QTabWidget):
 
         self.addTab(tab, title)
         self.setCurrentWidget(tab)
+
+        document = tab.findChild(QtGui.QPlainTextEdit).document()
+        tab.highlighter = MarkdownHighlighter(document)
+
         return tab
 
     def remove_tab(self, index):
@@ -173,7 +178,7 @@ class ZestedEditorTab(QtGui.QTabWidget):
 
     def warning_updated(self):
         '''
-        Add a little star if the content of the tab changed, and switch the 
+        Add a little star if the content of the tab changed, and switch the
         current_tab.updated attribute to True
         '''
         if not self.current_tab.updated:

@@ -34,7 +34,7 @@
      <property name="handleWidth">
       <number>6</number>
      </property>
-     <widget class="QTextEdit" name="text_editor">
+     <widget class="QPlainTextEdit" name="text_editor">
       <property name="acceptRichText">
        <bool>false</bool>
       </property>

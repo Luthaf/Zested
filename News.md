@@ -2,6 +2,7 @@
 
  - L'installation est possible avec pip
  - Le fonctionnement des onglets est amélioré
+ - Indication des erreurs orthographiques avec hunspell
 
 ## 0.3
 

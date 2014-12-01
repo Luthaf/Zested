@@ -13,6 +13,7 @@ UI_DIR = path.join(DATA_DIR, "ui")
 IMG_DIR = path.join(DATA_DIR, "img")
 CSS_DIR = path.join(DATA_DIR, "css")
 SMILEY_DIR = path.join(DATA_DIR, "smileys")
+DICT_DIR = path.join(DATA_DIR, "dict")
 TRANS_DIR = path.join(DATA_DIR, "translations")
 
 __version__ = "0.3"

@@ -21,7 +21,7 @@ options = {
     'license': "MIT",
     'version': __version__,
 
-    'install_requires': ["PySide", "pygments", "markdown"],
+    'install_requires': ["PySide", "pygments", "markdown", "hunspell"],
     'dependency_links': ['http://github.com/Luthaf/Python-ZMarkdown/archive/master-zds.zip#egg=markdown'],
 
     'packages': find_packages(),
