@@ -204,10 +204,14 @@ class ZestedEditorTab(QtGui.QTabWidget):
 class ZestedTextEditor(QtGui.QTextBrowser):
 
     def loadResource(self, type, name):
+        zds_domain = "http://zestedesavoir.com"
         if type == QtGui.QTextDocument.ImageResource:
             image_url = name.toString()
             if image_url.startswith("http"):
                 local_path = self._download_image(image_url)
+            elif image_url.startswith("/") and not os.path.isfile(image_url):
+                # relatives URL
+                local_path = self._download_image(zds_domain + image_url)
             else:
                 local_path = name.toLocalFile()
             return QtGui.QImage(local_path)
