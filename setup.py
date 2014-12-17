@@ -21,7 +21,7 @@ options = {
     'license': "MIT",
     'version': __version__,
 
-    'install_requires': ["PySide", "pygments", "markdown", "hunspell"],
+    'install_requires': ["PySide", "pygments", "markdown"],
     'dependency_links': ['http://github.com/Luthaf/Python-ZMarkdown/archive/master-zds.zip#egg=markdown'],
 
     'packages': find_packages(),
@@ -45,7 +45,6 @@ py2exe_options = {
     'includes': ["PySide.QtXml"],
     'packages': ["xml", "markdown", "pygments"],
     'dist_dir': os.path.join(os.path.dirname(__file__), "dist", "windows"),
-    'excludes': ['_ssl'],
     'bundle_files': 3, # Should be keeped, needed by PySide
 }
 
@@ -69,14 +68,14 @@ elif sys.argv[1] == "py2exe":
         os.mkdir(py2exe_options['dist_dir'])
 
     py2exe_data_files = [
-        ("assets\\" + i, glob.glob("assets\\" + i + "\\*")) for i in ["css", "img", "ui", "smileys"]
+        ("assets\\" + i, glob.glob("zested\\assets\\" + i + "\\*")) for i in ["css", "img", "ui", "smileys"]
     ]
 
     options.update(dict(
          setup_requires=['py2exe'],
          windows=[{
             "script": "Zested.py",
-            "icon_resources": [(1, os.path.join("assets", "assets", "img", "clem.ico"))]
+            "icon_resources": [(1, os.path.join("zested", "assets", "img", "clem.ico"))]
          }],
          zipfile="zested.zip",
          install_requires=None,
