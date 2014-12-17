@@ -86,6 +86,8 @@ class ZestedEditorTab(QtGui.QTabWidget):
         Remove the tab at the index `index`
         '''
         tab = self.widget(index)
+        if tab is None:
+            return None
 
         if tab.updated:
             message = SaveModifiedMessage()
@@ -122,7 +124,8 @@ class ZestedEditorTab(QtGui.QTabWidget):
         text = self.current_editor.toPlainText()
         with open(self.current_tab.filepath, "w", encoding="utf8") as fd:
             fd.write(text)
-        self._flip_updated()
+        if self.current_tab.updated:
+            self._flip_updated()
 
     def update_preview(self):
         '''
