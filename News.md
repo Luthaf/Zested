@@ -2,7 +2,7 @@
 
  - L'installation est possible avec pip
  - Le fonctionnement des onglets est amélioré
- - Indication des erreurs orthographiques avec hunspell
+ - Indication des erreurs orthographiques avec hunspell si pyhunspell est installé (https://github.com/blatinier/pyhunspell)
 
 ## 0.3
 

@@ -2,12 +2,19 @@ from PySide import QtGui, QtCore
 
 import os
 import re
-import hunspell
+
+HAVE_HUNSPELL = False
+try:
+    import hunspell
+    HAVE_HUNSPELL = True
+except ImportError:
+    pass
 
 from zested import DICT_DIR
 
-SpellChecker = hunspell.HunSpell(os.path.join(DICT_DIR, "fr.dic"),
-                                 os.path.join(DICT_DIR, "fr.aff"))
+if HAVE_HUNSPELL:
+    SpellChecker = hunspell.HunSpell(os.path.join(DICT_DIR, "fr.dic"),
+                                     os.path.join(DICT_DIR, "fr.aff"))
 
 class SpellCheckFormat(QtGui.QTextCharFormat):
     '''
@@ -24,8 +31,9 @@ class MarkdownHighlighter(QtGui.QSyntaxHighlighter):
     def highlightBlock(self, text):
         spellcheck_format = SpellCheckFormat()
 
-        for word in re.finditer("\w+", text):
-            if not SpellChecker.spell(word.group()):
-                self.setFormat(word.start(),
-                               word.end()-word.start(),
-                               spellcheck_format)
+        if HAVE_HUNSPELL:
+            for word in re.finditer("\w+", text):
+                if not SpellChecker.spell(word.group()):
+                    self.setFormat(word.start(),
+                                   word.end()-word.start(),
+                                   spellcheck_format)
