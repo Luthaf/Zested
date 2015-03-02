@@ -1,3 +1,7 @@
+## 0.5
+
+ - Nouvelle icône !
+
 ## 0.4
 
  - L'installation est possible avec pip
@@ -21,4 +25,3 @@
 ## 0.1
 
 Première version
-
