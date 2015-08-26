@@ -1,0 +1,19 @@
+% rebase('base.html')
+
+<nav>
+    {{!tutorial.navbar()}}
+</nav>
+
+<h1>{{extract.title}}</h1>
+
+<div id="content">
+    <div class="editor">
+        <textarea col="0" rows="0" id="editor-content">
+            {{extract.md}}
+        </textarea>
+    </div>
+
+    <div class="preview">
+        {{!extract.html}}
+    </div>
+</div>

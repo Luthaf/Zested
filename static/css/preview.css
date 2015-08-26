@@ -1,0 +1,23 @@
+.preview h3, h4 {
+    color: #EA9308;
+}
+
+.preview a {
+    color: #108BBF;
+}
+
+.preview .information {
+    background: #daeaee;
+}
+.preview .question {
+    background: #e2daee;
+}
+.preview .error {
+    background: #eedada;
+}
+.preview .warning {
+    background: #eee7da;
+}
+.preview .spoiler {
+    background: #EEE;
+}

@@ -1,6 +1,7 @@
 ## 0.5
 
- - Nouvelle icône !
+ - Nouvelle interface graphique basée sur [bottle](http://bottlepy.org/) et
+   [electron](http://electron.atom.io/)
 
 ## 0.4
 

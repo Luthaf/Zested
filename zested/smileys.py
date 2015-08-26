@@ -1,5 +1,4 @@
-# File from zds
-# https://github.com/zestedesavoir/zds-site/blob/dev/zds/utils/templatetags/smileysDef.py
+# -*- coding: utf-8 -*-
 
 import os
 from zested import SMILEY_DIR
