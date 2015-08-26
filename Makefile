@@ -2,24 +2,24 @@ version=$(shell python3 -c "import zested; print(zested.__version__)")
 ressources=zested/ressources.py
 
 OsX_app=dist/ZestEd.app
-OsX_zip=dist/ZestEd-OsX-$(version).zip
+OsX_dmg=dist/ZestEd-$(version).dmg
 
 Win_app=dist/windows/ZestEd.exe
 Win_zip=dist/ZestEd-Windows-$(version).zip
 
 all: release
-release: $(ressources) $(OsX_zip) $(Win_zip)
+release: $(ressources) $(OsX_dmg) $(Win_zip)
 
-$(OsX_zip):$(OsX_app)
-	@echo "Ziping ZestEd.app"
-	@zip -r $(OsX_zip) $(OsX_app) > /dev/null
+$(OsX_dmg):$(OsX_app)
+	@echo "==================  Creating ZestEd.dmg  =================="
+	@hdiutil create dist/Zested-$(version).dmg -srcfolder dist/Zested.app -ov
 
 $(OsX_app):
-	@echo "Building ZestEd.app"
-	@python3 setup.py py2app > /dev/null
+	@echo "==================  Building ZestEd.app  =================="
+	@pyinstaller --clean -y Zested-OSX.spec
 
 $(Win_zip): $(Win_app)
-	@echo "Ziping Windows version"
+	@echo "==================  Ziping Windows version  =================="
 	@zip -r $(Win_zip) dist/windows > /dev/null
 
 $(ressources): zested/assets/zested.qrc

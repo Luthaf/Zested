@@ -1,9 +1,7 @@
 from os import path
 import sys
 
-if hasattr(sys, "frozen") and sys.frozen == "macosx_app":
-    DATA_DIR = path.abspath(path.join(path.dirname(__file__), "..", "..", "..", "assets"))
-elif hasattr(sys, "frozen") and sys.platform == "win32":
+if hasattr(sys, "frozen"):
     DATA_DIR = path.join(path.dirname(sys.executable), "assets")
 else:
     DATA_DIR = path.abspath(path.join(path.dirname(__file__), "assets"))
