@@ -11,6 +11,7 @@ from zested.gui.messages import SaveModifiedMessage
 
 RENDER_INTERVAL = 500
 
+
 class ZestedEditorTab(QtGui.QTabWidget):
 
     def __init__(self, parent):
@@ -141,14 +142,14 @@ class ZestedEditorTab(QtGui.QTabWidget):
             return None
 
         self.render_thread = MarkdownRenderThread(
-                                self.current_editor.toPlainText(),
-                                self.css
-                                )
+            self.current_editor.toPlainText(),
+            self.css
+        )
         self.render_thread.start()
         self.render_thread.done.connect(self.render_preview)
 
         self.render_thread.wait(3/4*RENDER_INTERVAL)
-        #TODO: log this
+        # TODO: log this
         self.render_thread.terminate()
 
     def _switch_can_render(self):

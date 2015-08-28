@@ -5,10 +5,8 @@ from PySide import QtCore, QtGui, QtUiTools
 from zested.gui.loader import UiLoader
 from zested.gui import ZestedTextEditor, ZestedEditorTab
 
-from zested import IMG_DIR, UI_DIR
+from zested import UI_DIR
 from zested.tutorial import tutorial_from_manifest, render_tutorial
-
-from zested import ressources
 
 
 APP_STATES = {
@@ -30,6 +28,7 @@ ACTIONS_CONNECTIONS = {
     "actionFermer": "close_tab",
     "actionEnregistrer": "save_tab",
 }
+
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -87,10 +86,12 @@ class MainWindow(QtGui.QMainWindow):
 
     def load_tutorial(self):
         home_dir = os.getenv('USERPROFILE') or os.getenv('HOME')
-        path, _ = QtGui.QFileDialog.getOpenFileName(self,
-                    'Ouvir un tutoriel (fichier manifest.json)',
-                    home_dir,
-                    'manifest.json')
+        path, _ = QtGui.QFileDialog.getOpenFileName(
+            self,
+            'Ouvir un tutoriel (fichier manifest.json)',
+            home_dir,
+            'manifest.json'
+        )
         self._load_tutorial_from_path(path)
 
     def _load_tutorial_from_path(self, path):

@@ -1,7 +1,8 @@
-from PySide import QtCore, QtGui, QtUiTools
+from PySide import QtCore, QtUiTools
 import os
 
 from zested import UI_DIR
+
 
 class UiLoader(QtUiTools.QUiLoader):
 
@@ -16,7 +17,11 @@ class UiLoader(QtUiTools.QUiLoader):
             return self.baseinstance
         else:
             # create a new widget for child widgets
-            widget = super(UiLoader, self).createWidget(class_name, parent, name)
+            widget = super(UiLoader, self).createWidget(
+                class_name,
+                parent,
+                name
+            )
             if self.baseinstance:
                 # set an attribute for the new child widget on the base
                 # instance, just like PyQt4.uic.loadUi does.

@@ -1,4 +1,4 @@
-from PySide import QtGui, QtCore
+from PySide import QtGui
 
 import os
 import re
@@ -15,6 +15,7 @@ from zested import DICT_DIR
 if HAVE_HUNSPELL:
     SpellChecker = hunspell.HunSpell(os.path.join(DICT_DIR, "fr.dic"),
                                      os.path.join(DICT_DIR, "fr.aff"))
+
 
 class SpellCheckFormat(QtGui.QTextCharFormat):
     '''
