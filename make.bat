@@ -1,1 +1,1 @@
-python setup.py py2exe
+pyinstaller --clean -y Zested-Windows.spec

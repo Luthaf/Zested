@@ -33,29 +33,35 @@ pyside_postinstall.py -install
 Voici les instructions pour créer les versions *gelées*. Il faut tout d'abord installer
 l'intégralité des dépendances, puis suivre les instructions spécifiques.
 
-### Windows
-
-Le gel utilise `py2exe`, qu'il faut donc installer (`pip3 install py2exe`). Ensuite, c'est
-aussi simple que
-```
-python3 setup.py py2exe
-```
-Les fichiers produits sont dans `dist\windows`.
-
-### OsX
-
 Le gel utilise `pyinstaller`, qu'il faut installer dans sa version python 3 :
 ```
 pip3 install https://github.com/pyinstaller/pyinstaller/archive/python3.zip
-pyinstaller Zested-OSX.spec
 ```
-L'application est placée dans `dist`.
 
-Note: La version de PySide installée avec pip cause des segfaults lorsqu'elle est gelée. Il faut donc utiliser la version disponible avec Homebrew :
+### Dépendances supplémentaires
+
+#### Windows
+
+Sous Windows, vous aurez besoin de [pywin32](sourceforge.net/projects/pywin32/files/pywin32/)
+avant de pouvoir installed pyinstaller.
+
+### OS X
+
+La version de PySide installée avec pip cause des segfaults lorsqu'elle est gelée. Il faut
+donc utiliser la version disponible avec Homebrew :
 ```
-brew install python3 qt
-brew install pyside --with-python3
+brew install python3 qt brew
+install pyside --with-python3
 ```
+
+### Création des versions gelées
+
+Ensuite, un script est fourni à chaque fois, et il vous suffit de faire lancer la commande
+`make` pour créer les versions gelées dans le dossier `dist`.
+
+Sous OS X, `make dist` permet de créer l'ensemble des artefacts sous réserve que la
+version Windows existe déjà dans `dist/Zested-Windows` (avec une machine virtuelle par
+exemple).
 
 ## Contribuer au projet
 

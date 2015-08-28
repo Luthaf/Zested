@@ -1,31 +1,31 @@
 version=$(shell python3 -c "import zested; print(zested.__version__)")
 ressources=zested/ressources.py
 
-OsX_app=dist/ZestEd.app
-OsX_dmg=dist/ZestEd-$(version).dmg
+osx_app=dist/Zested.app
+osx_dmg=dist/Zested-OSX-$(version).dmg
 
-Win_app=dist/windows/ZestEd.exe
-Win_zip=dist/ZestEd-Windows-$(version).zip
+win_app=dist/Zested-windows/Zested.exe
+win_zip=dist/Zested-Windows-$(version).zip
 
-all: release
-release: $(ressources) $(OsX_dmg) $(Win_zip)
+all: $(osx_app)
+dist: $(ressources) $(osx_dmg) $(win_zip)
 
-$(OsX_dmg):$(OsX_app)
-	@echo "==================  Creating ZestEd.dmg  =================="
-	@hdiutil create dist/Zested-$(version).dmg -srcfolder dist/Zested.app -ov
+$(osx_dmg):$(osx_app)
+	@echo "==================  Creating OSX disk image  =================="
+	@hdiutil create $@ -srcfolder $^ -ov
 
-$(OsX_app):
-	@echo "==================  Building ZestEd.app  =================="
+$(osx_app):
+	@echo "==================  Building OSX App  =================="
 	@pyinstaller --clean -y Zested-OSX.spec
 
-$(Win_zip): $(Win_app)
+$(win_zip): $(win_app)
 	@echo "==================  Ziping Windows version  =================="
-	@zip -r $(Win_zip) dist/windows > /dev/null
+	@zip -r $@ dist/Zested-windows/ > /dev/null
 
 $(ressources): zested/assets/zested.qrc
 	pyside-rcc -py3 $^ -o $@
 
-.PHONY: clean
+.PHONY: clean, all, dist
 
 clean:
 	rm -rf build dist
