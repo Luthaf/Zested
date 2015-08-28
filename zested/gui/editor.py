@@ -6,7 +6,7 @@ from PySide import QtGui, QtUiTools, QtCore
 
 from zested import UI_DIR, CSS_DIR
 from zested.render import MarkdownRenderThread
-from zested.highlight import MarkdownHighlighter
+from zested.spellcheck import MarkdownHighlighter
 from zested.gui.messages import SaveModifiedMessage
 
 RENDER_INTERVAL = 500
