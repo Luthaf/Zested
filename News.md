@@ -1,3 +1,8 @@
+## 1.0
+
+ - Ré-écriture du code en C++ pour faciliter l'installation de Zested, et
+   des bibliothèques tierces.
+
 ## 0.5
 
  - Nouvelle icône !
