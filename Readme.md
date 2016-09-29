@@ -1,4 +1,10 @@
-# Zested
+# Zested est déprécié!
+
+Je n'ai pas le temps d'y travailler, et une alternative bien meilleure existe: https://github.com/firm1/zest-writer/. 
+
+Ce code reste en ligne si jamais quelqu'un veux s'en servir, mais je ne le maintient plus!
+
+## Zested
 
 Zested est un éditeur hors-ligne pour [Zeste de Savoir](http://zestedesavoir.com/)
 
